@@ -1,5 +1,4 @@
 #!/bin/bash
-# My Telegram : https://t.me/Akbar218
 # ==========================================
 # Color
 RED='\033[0;31m'
@@ -14,19 +13,8 @@ LIGHT='\033[0;37m'
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
 echo "Checking VPS"
-IZIN=$( curl https://raw.githubusercontent.com/senowahyu62/perizinan/main/ipvps.txt | grep $MYIP )
-if [ $MYIP = $MYIP ]; then
-echo -e "${NC}${GREEN}Permission Accepted...${NC}"
-else
-echo -e "${NC}${RED}Permission Denied!${NC}";
-echo -e "${NC}${LIGHT}Please Contact Admin!!"
-echo -e "${NC}${LIGHT}Facebook : https://m.facebook.com/lis.tio.718"
-echo -e "${NC}${LIGHT}WhatsApp : 081545854516"
-echo -e "${NC}${LIGHT}Telegram : https://t.me/Akbar218"
-exit 0
-fi
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#&# " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#&# " "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		echo ""
 		echo "You have no existing clients!"
@@ -38,7 +26,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#&# " "/etc/xray/config.json")
 	echo " Press CTRL+C to return"
 	echo " ==============================="
 	echo "     No  Expired   User"
-	grep -E "^#&# " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+	grep -E "^#&# " "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" | cut -d ' ' -f 2-3 | nl -s ') '
 	until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 		if [[ ${CLIENT_NUMBER} == '1' ]]; then
 			read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -46,8 +34,8 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#&# " "/etc/xray/config.json")
 			read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
 		fi
 	done
-user=$(grep -E "^#&# " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^#&# " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#&# " "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#&# " "/etc/v2ray-agent/xray/conf/04_trojan_TCP_inbounds.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 sed -i "/^#&# $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#&# $user $exp/,/^},{/d" /etc/xray/config.json
 systemctl restart xray.service
@@ -60,4 +48,4 @@ echo "================================"
 echo "Username  : $user"
 echo "Expired   : $exp"
 echo "================================"
-echo "Script By Akbar Maulana"
+echo "Lumine Host"
